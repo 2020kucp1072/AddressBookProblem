@@ -29,6 +29,19 @@ class Contact:
 class AddressBook:
     def __init__(self):
         self.contacts = {}
+    def add_contact(self, contact):
+      '''
+        Description:
+            function to add contact
+        parameters:
+             self as a parameter
+        Return:
+             none
+      '''
+      key = f"{contact.first_name} {contact.last_name}"  
+      self.contacts[key] = contact
+      log.info(self.contacts.items())
+      log.info(f"Contact {key} added successfully.")
         
     
     
@@ -47,11 +60,73 @@ class AddressBookMain:
              none
         '''
         print("WELCOME TO ADDRESS BOOK PROGRAM")
-                
+    
+    def add_contact_console(self):
+        '''
+        Description:
+             function to take input from console to add contact
+        parameters:
+             self as a parameter
+        Return:
+             none
+        '''
+        key = input("enter the Adress book key: ")
+        print("Enter the following contact details:")
+        if key in self.address_books:
+            
+         first_name = input("First Name: ")
+         last_name = input("Last Name: ")
+         address = input("Address: ")
+         city = input("City: ")
+         state = input("State: ")
+         zip_code = input("Zip Code: ")
+         phone = input("Phone Number: ")
+         email = input("Email: ")
 
+         contact = Contact(first_name, last_name, address, city, state, zip_code, phone, email)
+         self.address_books[key].add_contact(contact)           
+        else:
+            log.error(f"{key} address book doesn't exist")
+    
+        
+    def add_new_address_book(self):
+        
+        name = input("Enter the name of the new Address Book: ")
+        if name not in self.address_books:
+            self.address_books[name] = AddressBook()
+            log.info(f"Address Book '{name}' created successfully.")
+        else:
+            log.info(f"Address Book '{name}' already exists.")
+                 
+    def choice(self):
+        '''
+        Description:
+             function for making choice 
+        parameters:
+             self as a parameter
+        Return:
+             none
+        '''
+        
+        while True:
+           
+            print("1. Add New Contact")
+            print("4. new Address book")
+            print("7. exit")
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+               
+                self.add_contact_console()
+            elif choice =="4":
+                self.add_new_address_book()
+            else:
+                print("Invalid choice. Please try again.")
+                
 def main():
     address_main = AddressBookMain() 
     address_main.welcome_message()
+    address_main.choice()
     
 if __name__=="__main__":
     main()
