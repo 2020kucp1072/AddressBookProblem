@@ -43,7 +43,18 @@ class AddressBook:
       log.info(self.contacts.items())
       log.info(f"Contact {key} added successfully.")
         
-    
+    def edit_contact(self, f_name, l_name):
+        key = f"{f_name} {l_name}"
+        if key not in self.contacts:
+            log.info(f"{key} not found in Contacts")
+        else:
+            self.contacts[key].address = input("Enter new address: ")
+            self.contacts[key].city = input("Enter new city: ")
+            self.contacts[key].state = input("Enter new state: ")
+            self.contacts[key].zip_code = input("Enter new zipcode: ")
+            self.contacts[key].phone = input("Enter new phone number: ")
+            self.contacts[key].email = input("Enter new email: ")
+   
     
 class AddressBookMain:
     def __init__(self):
@@ -97,7 +108,21 @@ class AddressBookMain:
             log.info(f"Address Book '{name}' created successfully.")
         else:
             log.info(f"Address Book '{name}' already exists.")
-                 
+    
+    def edit_contact_console(self):
+        key = input("enter the Adress book key")
+        
+        if key in self.address_books:
+            
+         print("Enter the Following Details: ")
+
+         f_name = input("Enter first name: ")
+         l_name = input("Enter last name: ")
+
+         self.address_books[key].edit_contact(f_name,l_name)
+        else:
+            log.error(f"{key} address book doesn't exist")
+                        
     def choice(self):
         '''
         Description:
@@ -111,6 +136,7 @@ class AddressBookMain:
         while True:
            
             print("1. Add New Contact")
+            print("2. edit existing contact")
             print("4. new Address book")
             print("7. exit")
             choice = input("Enter your choice: ")
@@ -118,8 +144,12 @@ class AddressBookMain:
             if choice == "1":
                
                 self.add_contact_console()
+            elif choice =="2":
+                self.edit_contact_console()
             elif choice =="4":
                 self.add_new_address_book()
+            elif choice =="7":
+                exit
             else:
                 print("Invalid choice. Please try again.")
                 
