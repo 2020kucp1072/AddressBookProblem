@@ -9,7 +9,7 @@
 
 
 import log
-
+from collections import defaultdict
 log = log.logger_init('AddressBookProblem')
 
 class Contact:
@@ -29,6 +29,9 @@ class Contact:
 class AddressBook:
     def __init__(self):
         self.contacts = {}
+        self.city_dict = defaultdict(list)
+        self.state_dict = defaultdict(list)
+        
     def add_contact(self, contact):
       '''
         Description:
@@ -42,6 +45,8 @@ class AddressBook:
       if key not in self.contacts:
           
        self.contacts[key] = contact
+       self.city_dict[contact.city].append(contact)
+       self.state_dict[contact.state].append(contact)
        log.info(self.contacts.items())
        log.info(f"Contact {key} added successfully.")
        
@@ -76,6 +81,26 @@ class AddressBook:
         log.info(f"Contact {key} deleted successfully.")
      else:
         log.info(f"Contact {key} not found in the address book.")
+        
+    def view_by_city_or_state(self, location):
+        '''
+        Description:
+            function to view by city or state
+        parameters:
+            self and location
+        Return:
+            no 
+        '''
+        if location in self.city_dict:
+            log.info(f"Contacts in city {location}:")
+            for contact in self.city_dict[location]:
+                log.info(contact)
+        elif location in self.state_dict:
+            log.info(f"Contacts in state {location}:")
+            for contact in self.state_dict[location]:
+                log.info(contact)
+        else:
+            log.info("No contacts found for the given location.")
     
 class AddressBookMain:
     def __init__(self):
@@ -175,6 +200,25 @@ class AddressBookMain:
             if ( contact.city == location) or (contact.state == location):
                 results.append(f"{contact} in Address Book: {book_name}")
      return results
+     
+    def view_state_or_city_console(self):
+     """
+    Description:
+         view_state_or_city from console
+    Parameters:
+         self
+    Return:
+        None
+     """
+     key = input("enter the Adress book key: ")
+     
+     if key in self.address_books:
+         
+         location =input("enter city or state: ")
+         self.address_books[key].view_by_city_or_state(location)
+        
+          
+         
          
                           
     def choice(self):
@@ -192,8 +236,9 @@ class AddressBookMain:
             print("1. Add New Contact")
             print("2. edit existing contact")
             print("3. delete contact")
-            print("4. new Address book from console")
-            print("5. search by city or state")
+            print("4. new Address book from console:")
+            print("5. search by city or state: ")
+            print("6. view by city or state: ")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -213,7 +258,8 @@ class AddressBookMain:
                 
             elif choice =="5":
                 self.search_by_city_or_state()
-            
+            elif choice =="6":
+                self.view_state_or_city_console()
             elif choice =="7":
                 exit
             else:
