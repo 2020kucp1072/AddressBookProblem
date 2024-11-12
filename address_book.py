@@ -175,6 +175,23 @@ class AddressBook:
         log.info("Contacts sorted by zip:")
         for contact in sorted_contacts:
             log.info(contact)
+    
+    def save_to_text_file(self, filename):
+        '''
+        
+        Description:
+            Saves the address book to a text file with each contact on a new line.
+            
+        parameters:
+            filename
+            
+        Return :
+            no
+        '''
+        with open(filename, 'w') as file:
+            for contact_key, contact in self.contacts.items():
+                file.write(f"{contact_key}: {contact}\n")
+        log.info(f"Address Book saved to text file '{filename}'.")
 
     
 class AddressBookMain:
@@ -244,22 +261,7 @@ class AddressBookMain:
         else:
             log.error(f"{key} address book doesn't exist")
             
-    def save_to_text_file(self, filename):
-        '''
-        
-        Description:
-            Saves the address book to a text file with each contact on a new line.
-            
-        parameters:
-            filename
-            
-        Return :
-            no
-        '''
-        with open(filename, 'w') as file:
-            for contact_key, contact in self.contacts.items():
-                file.write(f"{contact_key}: {contact}\n")
-        log.info(f"Address Book saved to text file '{filename}'.")
+    
         
     def delete_contact_console(self):
      """
@@ -469,7 +471,7 @@ class AddressBookMain:
             elif choice =="12":
                 self.display_sorted_by_zip_console()
             elif choice =="13":
-                self.save_to_text_file()
+                self.save_to_text_file_console()
             elif choice =="7":
                 exit
             else:
