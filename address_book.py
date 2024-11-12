@@ -39,9 +39,14 @@ class AddressBook:
              none
       '''
       key = f"{contact.first_name} {contact.last_name}"  
-      self.contacts[key] = contact
-      log.info(self.contacts.items())
-      log.info(f"Contact {key} added successfully.")
+      if key not in self.contacts:
+          
+       self.contacts[key] = contact
+       log.info(self.contacts.items())
+       log.info(f"Contact {key} added successfully.")
+       
+      else:
+       log.info(f"{key} contact already exists")   
         
     def edit_contact(self, f_name, l_name):
         key = f"{f_name} {l_name}"
