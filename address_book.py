@@ -243,6 +243,23 @@ class AddressBookMain:
          self.address_books[key].edit_contact(f_name,l_name)
         else:
             log.error(f"{key} address book doesn't exist")
+            
+    def save_to_text_file(self, filename):
+        '''
+        
+        Description:
+            Saves the address book to a text file with each contact on a new line.
+            
+        parameters:
+            filename
+            
+        Return :
+            no
+        '''
+        with open(filename, 'w') as file:
+            for contact_key, contact in self.contacts.items():
+                file.write(f"{contact_key}: {contact}\n")
+        log.info(f"Address Book saved to text file '{filename}'.")
         
     def delete_contact_console(self):
      """
@@ -375,7 +392,27 @@ class AddressBookMain:
         else:
             log.error(f"{key} address book not found")
          
-                          
+    
+    def save_to_text_file_console(self):
+        '''
+        Description:
+            Saves the address book to a text file with each contact on a new line.
+            
+        parameters:
+            self
+            
+        Return :
+            no
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].save_to_text_file("AddressBookData.txt")
+        else:
+            log.error(f"{key} address book not found")
+            
+        
     def choice(self):
         '''
         Description:
@@ -399,6 +436,7 @@ class AddressBookMain:
             print("10. sort contacts by city")
             print("11. sort contacts by state")
             print("12. sort contacts by zipcode")
+            print("13. to write address book to file")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -430,6 +468,8 @@ class AddressBookMain:
                 self.display_sorted_by_state_console()
             elif choice =="12":
                 self.display_sorted_by_zip_console()
+            elif choice =="13":
+                self.save_to_text_file()
             elif choice =="7":
                 exit
             else:
