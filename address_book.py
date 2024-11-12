@@ -166,6 +166,15 @@ class AddressBookMain:
       
      else : 
          log.error(f"{key} address book doesn't exist")
+    
+    def search_by_city_or_state(self, location):
+        
+     results = [] 
+     for book_name, book in self.address_books.items():
+        for contact in book.contacts.values():
+            if ( contact.city == location) or (contact.state == location):
+                results.append(f"{contact} in Address Book: {book_name}")
+     return results
          
                           
     def choice(self):
@@ -184,6 +193,7 @@ class AddressBookMain:
             print("2. edit existing contact")
             print("3. delete contact")
             print("4. new Address book from console")
+            print("5. search by city or state")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -200,6 +210,10 @@ class AddressBookMain:
                 self.delete_contact_console()
             elif choice =="4":
                 self.add_new_address_book()
+                
+            elif choice =="5":
+                self.search_by_city_or_state()
+            
             elif choice =="7":
                 exit
             else:
