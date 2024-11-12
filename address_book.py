@@ -54,7 +54,23 @@ class AddressBook:
             self.contacts[key].zip_code = input("Enter new zipcode: ")
             self.contacts[key].phone = input("Enter new phone number: ")
             self.contacts[key].email = input("Enter new email: ")
-   
+            
+    def delete_contact(self, f_name, l_name):
+     """
+     Description:
+        Deletes a contact from the address book based on the first and last name.
+    Parameters:
+        f_name (str): First name of the contact to delete.
+        l_name (str): Last name of the contact to delete.
+    Return:
+        None
+     """
+     key = f"{f_name} {l_name}"
+     if key in self.contacts:
+        del self.contacts[key]
+        log.info(f"Contact {key} deleted successfully.")
+     else:
+        log.info(f"Contact {key} not found in the address book.")
     
 class AddressBookMain:
     def __init__(self):
@@ -122,7 +138,31 @@ class AddressBookMain:
          self.address_books[key].edit_contact(f_name,l_name)
         else:
             log.error(f"{key} address book doesn't exist")
-                        
+        
+    def delete_contact_console(self):
+     """
+     Description:
+        Deletes a contact from the address book based on the first and last name.
+    Parameters:
+         self
+    Return:
+        None
+     """
+     key = input("enter the Adress book key: ")
+     
+     if key in self.address_books:
+         
+      print("Enter the Following Details: ")
+
+      f_name = input("Enter first name: ")
+      l_name = input("Enter last name: ")
+
+      self.address_books[key].delete_contact(f_name,l_name)
+      
+     else : 
+         log.error(f"{key} address book doesn't exist")
+         
+                          
     def choice(self):
         '''
         Description:
@@ -137,6 +177,7 @@ class AddressBookMain:
            
             print("1. Add New Contact")
             print("2. edit existing contact")
+            print("3. delete contact")
             print("4. new Address book")
             print("7. exit")
             choice = input("Enter your choice: ")
@@ -146,6 +187,8 @@ class AddressBookMain:
                 self.add_contact_console()
             elif choice =="2":
                 self.edit_contact_console()
+            elif choice =="3":
+                self.delete_contact_console()
             elif choice =="4":
                 self.add_new_address_book()
             elif choice =="7":
