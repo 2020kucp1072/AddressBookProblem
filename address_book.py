@@ -183,8 +183,12 @@ class AddressBookMain:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-               
-                self.add_contact_console()
+                count =int(input("enter the no.of contacts want to enter: "))
+                
+                while count:
+                 self.add_contact_console()
+                 count = count-1
+                
             elif choice =="2":
                 self.edit_contact_console()
             elif choice =="3":
