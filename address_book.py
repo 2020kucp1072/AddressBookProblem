@@ -117,6 +117,23 @@ class AddressBook:
             log.info(f"{city_count} contact(s) found in city {location}.")
         if state_count > 0:
             log.info(f"{state_count} contact(s) found in state {location}.")
+    
+    def display_sorted_contacts_alpha(self):
+        
+        '''
+        Description:
+            function to display sorted contacts alphabetical order
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        
+        sorted_contacts = sorted(self.contacts.values(), key=lambda c: (c.first_name, c.last_name))
+        log.info("Contacts sorted alphabetically:")
+        for contact in sorted_contacts:
+            log.info(contact)
+
 
     
 class AddressBookMain:
@@ -248,7 +265,24 @@ class AddressBookMain:
         if key in self.address_books: 
             location = input("enter the city or state: ")
             self.address_books[key].count_by_city_or_state(location)
-         
+    
+    
+    def sort_contacts_from_console(self):
+        '''
+        Description:
+            function to display sorted contacts alphabetical order
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].display_sorted_contacts_alpha()
+        
+        
          
                           
     def choice(self):
@@ -270,6 +304,7 @@ class AddressBookMain:
             print("5. search by city or state: ")
             print("6. view by city or state: ")
             print("8. count_by_city_state")
+            print("9. sort contacts alphabetically")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -293,6 +328,8 @@ class AddressBookMain:
                 self.view_state_or_city_console()
             elif choice =="8":
                 self.count_by_city_state_console()
+            elif choice =="9":
+                self.sort_contacts_from_console()
             elif choice =="7":
                 exit
             else:
