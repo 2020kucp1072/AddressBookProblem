@@ -11,6 +11,7 @@
 import log
 from collections import defaultdict
 import csv
+import json
 log = log.logger_init('AddressBookProblem')
 
 class Contact:
@@ -213,6 +214,25 @@ class AddressBook:
                 writer.writerow([contact.first_name, contact.last_name, contact.address,
                                  contact.city, contact.state, contact.zip_code, contact.phone, contact.email])
         log.info(f"Address Book saved to CSV file '{filename}'.")
+    
+    def save_to_json_file(self, filename):
+        '''
+         
+         Description:
+            function to save the address book to a json file.
+            
+        parameters:
+            filename
+            
+        Return :
+            no
+        
+        
+        '''
+        data = {key: contact.__dict__ for key, contact in self.contacts.items()}
+        with open(filename, 'w') as file:
+            json.dump(data, file, indent=4)
+        log.info(f"Address Book saved to JSON file '{filename}'.")
         
 class AddressBookMain:
     def __init__(self):
@@ -455,7 +475,27 @@ class AddressBookMain:
         else:
             log.error(f"{key} address book not found")
             
+    def save_to_json_file_console(self):
+        '''
+         
+         Description:
+            function to save the address book to a json file.
             
+        parameters:
+            filename
+            
+        Return :
+            no
+        
+        
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].save_to_json_file("AddressBookData.json")
+        else:
+            log.error(f"{key} address book not found")
         
     def choice(self):
         '''
@@ -482,6 +522,7 @@ class AddressBookMain:
             print("12. sort contacts by zipcode")
             print("13. to write address book to file")
             print("14. to write address book to a csv file")
+            print("15. to write address book to a json file")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -517,6 +558,8 @@ class AddressBookMain:
                 self.save_to_text_file_console()
             elif choice =="14":
                 self.save_to_csv_file_console()
+            elif choice =="15":
+                self.save_to_json_file_console()
             elif choice =="7":
                 exit
             else:
