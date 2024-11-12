@@ -102,6 +102,23 @@ class AddressBook:
         else:
             log.info("No contacts found for the given location.")
     
+    def count_by_city_or_state(self, location):
+        '''
+        Description:
+            function to count persons in a city or a state in an address book
+        parameters:
+            self and location
+        Return:
+            no 
+        '''
+        city_count = len(self.city_dict.get(location, []))
+        state_count = len(self.state_dict.get(location, []))
+        if city_count > 0:
+            log.info(f"{city_count} contact(s) found in city {location}.")
+        if state_count > 0:
+            log.info(f"{state_count} contact(s) found in state {location}.")
+
+    
 class AddressBookMain:
     def __init__(self):
         
@@ -217,7 +234,20 @@ class AddressBookMain:
          location =input("enter city or state: ")
          self.address_books[key].view_by_city_or_state(location)
         
-          
+    def count_by_city_state_console(self):
+        '''
+        Description:
+            function to count no.of contacts in a city or a state in an address book
+        parameters:
+            self and location
+        Return:
+            no 
+        '''  
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            location = input("enter the city or state: ")
+            self.address_books[key].count_by_city_or_state(location)
          
          
                           
@@ -239,6 +269,7 @@ class AddressBookMain:
             print("4. new Address book from console:")
             print("5. search by city or state: ")
             print("6. view by city or state: ")
+            print("8. count_by_city_state")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -260,6 +291,8 @@ class AddressBookMain:
                 self.search_by_city_or_state()
             elif choice =="6":
                 self.view_state_or_city_console()
+            elif choice =="8":
+                self.count_by_city_state_console()
             elif choice =="7":
                 exit
             else:
