@@ -178,7 +178,7 @@ class AddressBookMain:
             print("1. Add New Contact")
             print("2. edit existing contact")
             print("3. delete contact")
-            print("4. new Address book")
+            print("4. new Address book from console")
             print("7. exit")
             choice = input("Enter your choice: ")
 
