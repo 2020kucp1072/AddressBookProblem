@@ -134,6 +134,47 @@ class AddressBook:
         for contact in sorted_contacts:
             log.info(contact)
 
+    def display_sorted_by_city(self):
+        '''
+        Description:
+            function to display sorted contacts by city 
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        sorted_contacts = sorted(self.contacts.values(), key=lambda c: c.city)
+        log.info("Contacts sorted by city:")
+        for contact in sorted_contacts:
+            log.info(contact)
+
+    def display_sorted_by_state(self):
+        '''
+        Description:
+            function to display sorted contacts by state 
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        sorted_contacts = sorted(self.contacts.values(), key=lambda c: c.state)
+        log.info("Contacts sorted by state:")
+        for contact in sorted_contacts:
+            log.info(contact)
+
+    def display_sorted_by_zip(self):
+        '''
+        Description:
+            function to display sorted contacted by zipcode
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        sorted_contacts = sorted(self.contacts.values(), key=lambda c: c.zip_code)
+        log.info("Contacts sorted by zip:")
+        for contact in sorted_contacts:
+            log.info(contact)
 
     
 class AddressBookMain:
@@ -282,7 +323,57 @@ class AddressBookMain:
             
             self.address_books[key].display_sorted_contacts_alpha()
         
-        
+    
+    def display_sorted_by_city_console(self):
+        '''
+        Description:
+            function to display sorted contacts by city 
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].display_sorted_by_city()
+        else:
+            log.error(f"{key} address book not found")
+
+    def display_sorted_by_state_console(self):
+        '''
+        Description:
+            function to display sorted contacts by state 
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].display_sorted_by_state()
+        else:
+            log.error(f"{key} address book not found")
+
+    def display_sorted_by_zip_console(self):
+        '''
+        Description:
+            function to display sorted contacted by zipcode
+        parameters:
+            self 
+        Return:
+            no 
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].display_sorted_by_zip()
+        else:
+            log.error(f"{key} address book not found")
          
                           
     def choice(self):
@@ -305,6 +396,9 @@ class AddressBookMain:
             print("6. view by city or state: ")
             print("8. count_by_city_state")
             print("9. sort contacts alphabetically")
+            print("10. sort contacts by city")
+            print("11. sort contacts by state")
+            print("12. sort contacts by zipcode")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -330,6 +424,12 @@ class AddressBookMain:
                 self.count_by_city_state_console()
             elif choice =="9":
                 self.sort_contacts_from_console()
+            elif choice =="10":
+                self.display_sorted_by_city_console()
+            elif choice =="11":
+                self.display_sorted_by_state_console()
+            elif choice =="12":
+                self.display_sorted_by_zip_console()
             elif choice =="7":
                 exit
             else:
