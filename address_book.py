@@ -10,6 +10,7 @@
 
 import log
 from collections import defaultdict
+import csv
 log = log.logger_init('AddressBookProblem')
 
 class Contact:
@@ -193,7 +194,26 @@ class AddressBook:
                 file.write(f"{contact_key}: {contact}\n")
         log.info(f"Address Book saved to text file '{filename}'.")
 
-    
+    def save_to_csv_file(self, filename):
+        '''
+         Description:
+            Saves the address book to a csv file.
+            
+        parameters:
+            filename
+            
+        Return :
+            no
+        
+        '''
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['First Name', 'Last Name', 'Address', 'City', 'State', 'Zip Code', 'Phone', 'Email'])
+            for contact in self.contacts.values():
+                writer.writerow([contact.first_name, contact.last_name, contact.address,
+                                 contact.city, contact.state, contact.zip_code, contact.phone, contact.email])
+        log.info(f"Address Book saved to CSV file '{filename}'.")
+        
 class AddressBookMain:
     def __init__(self):
         
@@ -414,6 +434,28 @@ class AddressBookMain:
         else:
             log.error(f"{key} address book not found")
             
+    
+    def save_to_csv_file_console(self):
+        '''
+         Description:
+            Saves the address book to a csv file.
+            
+        parameters:
+            filename
+            
+        Return :
+            no
+        
+        '''
+        key = input("enter the Adress book key: ")
+     
+        if key in self.address_books: 
+            
+            self.address_books[key].save_to_csv_file("AddressBookData.csv")
+        else:
+            log.error(f"{key} address book not found")
+            
+            
         
     def choice(self):
         '''
@@ -439,6 +481,7 @@ class AddressBookMain:
             print("11. sort contacts by state")
             print("12. sort contacts by zipcode")
             print("13. to write address book to file")
+            print("14. to write address book to a csv file")
             print("7. exit")
             choice = input("Enter your choice: ")
 
@@ -472,6 +515,8 @@ class AddressBookMain:
                 self.display_sorted_by_zip_console()
             elif choice =="13":
                 self.save_to_text_file_console()
+            elif choice =="14":
+                self.save_to_csv_file_console()
             elif choice =="7":
                 exit
             else:
