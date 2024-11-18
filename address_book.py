@@ -541,8 +541,11 @@ class AddressBookMain:
                 self.add_new_address_book()
                 
             elif choice =="5":
-                self.search_by_city_or_state()
+                location = input("enter city or state: ")
+                
+                self.search_by_city_or_state(location)
             elif choice =="6":
+    
                 self.view_state_or_city_console()
             elif choice =="8":
                 self.count_by_city_state_console()
